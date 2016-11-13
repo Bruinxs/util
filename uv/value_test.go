@@ -2,7 +2,7 @@ package uv
 
 import (
 	"fmt"
-	"github.com/Bruinxs/tu"
+	"github.com/Bruinxs/tu/ts"
 	"reflect"
 	"strings"
 	"testing"
@@ -86,6 +86,8 @@ func TestFetch(t *testing.T) {
 		"fs":  "3.1415",
 		//
 		"bs": "true",
+		//
+		"m2": map[string]interface{}{},
 	}
 	var (
 		s1 string
@@ -123,6 +125,12 @@ func TestFetch(t *testing.T) {
 		return
 	}
 
+	err = Fetch(m, "m2,m,n", &s1)
+	if err == nil || !strings.Contains(err.Error(), "assert to string fail") {
+		t.Error(err)
+		return
+	}
+
 	//5
 	err = Fetch(m, `
 		s1,m,3;
@@ -141,7 +149,7 @@ func TestFetch(t *testing.T) {
 		t.Errorf("s3(%v) != %v", got, want)
 		return
 	}
-	if got, want := s4, []string{"str1", "str2", "str3", "str4"}; !tu.CmpStr_Strict(got, want) {
+	if got, want := s4, []string{"str1", "str2", "str3", "str4"}; !ts.CmpStr_Strict(got, want) {
 		t.Errorf("s4(%v) != %v", got, want)
 		return
 	}
@@ -287,7 +295,7 @@ func TestFetch(t *testing.T) {
 	}
 
 	err = Fetch(m, "s1,m,0;", &i1)
-	if err == nil || !strings.Contains(err.Error(), "to int64 err") {
+	if err == nil || !strings.Contains(err.Error(), "invalid syntax") {
 		t.Error(err)
 		return
 	}
@@ -305,7 +313,7 @@ func TestFetch(t *testing.T) {
 	}
 
 	err = Fetch(m, "s1,m,n;", &f1)
-	if err == nil || !strings.Contains(err.Error(), "to float64 err") {
+	if err == nil || !strings.Contains(err.Error(), "invalid syntax") {
 		t.Error(err)
 		return
 	}
@@ -323,7 +331,7 @@ func TestFetch(t *testing.T) {
 	}
 
 	err = Fetch(m, "s1,m,0|0;", &b1)
-	if err == nil || !strings.Contains(err.Error(), "to bool err") {
+	if err == nil || !strings.Contains(err.Error(), "invalid syntax") {
 		t.Error(err)
 		return
 	}
@@ -335,7 +343,7 @@ func TestFetch(t *testing.T) {
 	}
 
 	err = Fetch(m, "f1,m,0|0;", &s4)
-	if err == nil || !strings.Contains(err.Error(), "assert to slice fail") {
+	if err == nil || !strings.Contains(err.Error(), "assert to string slice fail") {
 		t.Error(err)
 		return
 	}

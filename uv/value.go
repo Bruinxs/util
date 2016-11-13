@@ -57,41 +57,24 @@ func Fetch(valuer Value, format string, args ...interface{}) error {
 			return fmt.Errorf("arg in order %v expect ptr type but a %t", i, args[i])
 		}
 
-		var err error
 		elemVal := argVal.Elem()
 		switch elemVal.Kind() {
 		case reflect.String:
-			if sv, ok := val.(string); ok {
-				elemVal.SetString(sv)
-			} else {
-				elemVal.SetString(fmt.Sprintf("%v", val))
+			sv, err := I2Str(val)
+			if err != nil {
+				return err
 			}
+			elemVal.SetString(sv)
 
 			err = checkRange(elemVal, options[2])
 			if err != nil {
 				return fmt.Errorf("row(%v), %v", rows[i], err)
 			}
+
 		case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
-			var iv int64
-			switch val.(type) {
-			case int:
-				iv = int64(val.(int))
-			case int8:
-				iv = int64(val.(int8))
-			case int16:
-				iv = int64(val.(int16))
-			case int32:
-				iv = int64(val.(int32))
-			case int64:
-				iv = val.(int64)
-			case string:
-				s := val.(string)
-				iv, err = strconv.ParseInt(s, 10, 64)
-				if err != nil {
-					return fmt.Errorf("row(%v) parse str val(%v) to int64 err(%v)", rows[i], s, err)
-				}
-			default:
-				return fmt.Errorf("row(%v) val(%v) assert to int fail", rows[i], val)
+			iv, err := I2Int64(val)
+			if err != nil {
+				return err
 			}
 			elemVal.SetInt(iv)
 
@@ -99,21 +82,11 @@ func Fetch(valuer Value, format string, args ...interface{}) error {
 			if err != nil {
 				return fmt.Errorf("row(%v), %v", rows[i], err)
 			}
+
 		case reflect.Float32, reflect.Float64:
-			var fv float64
-			switch val.(type) {
-			case float32:
-				fv = float64(val.(float32))
-			case float64:
-				fv = val.(float64)
-			case string:
-				s := val.(string)
-				fv, err = strconv.ParseFloat(s, 64)
-				if err != nil {
-					return fmt.Errorf("row(%v) parse str val(%v) to float64 err(%v)", rows[i], s, err)
-				}
-			default:
-				return fmt.Errorf("row(%v) val(%v) assert to float fail", rows[i], val)
+			fv, err := I2Float64(val)
+			if err != nil {
+				return err
 			}
 			elemVal.SetFloat(fv)
 
@@ -121,34 +94,21 @@ func Fetch(valuer Value, format string, args ...interface{}) error {
 			if err != nil {
 				return fmt.Errorf("row(%v), %v", rows[i], err)
 			}
+
 		case reflect.Bool:
-			switch val.(type) {
-			case bool:
-				elemVal.SetBool(val.(bool))
-			case int:
-				iv := val.(int)
-				elemVal.SetBool(iv != 0)
-			case string:
-				s := val.(string)
-				b, err := strconv.ParseBool(s)
-				if err != nil {
-					return fmt.Errorf("row(%v) parse str val(%v) to bool err(%v)", rows[i], s, err)
-				}
-				elemVal.SetBool(b)
-			default:
-				return fmt.Errorf("row(%v) val(%v) assert to bool fail", rows[i], val)
+			bv, err := I2Bool(val)
+			if err != nil {
+				return err
 			}
+			elemVal.SetBool(bv)
+
 		case reflect.Slice:
-			switch val.(type) {
-			case string:
-				s := val.(string)
-				slice := strings.Split(s, ",")
-				elemSlice := elemVal
-				elemSlice = reflect.AppendSlice(elemSlice, reflect.ValueOf(slice))
-				elemVal.Set(elemSlice)
-			default:
-				return fmt.Errorf("row(%v) val(%v) assert to slice fail", rows[i], val)
+			ssv, err := I2StrSlice(val)
+			if err != nil {
+				return err
 			}
+			elemVal.Set(reflect.ValueOf(ssv))
+
 		default:
 			return fmt.Errorf("row(%v) arg(%v) type(%t) illegal", rows[i], args[i], args[i])
 		}
