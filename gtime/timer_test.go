@@ -54,8 +54,9 @@ func TestAlarmDay(t *testing.T) {
 		t.Errorf("err(%v) is nil", err)
 	}
 
+	now := time.Now().Local()
 	num, count := 0, 1
-	hour, minute, second := 11, 17, 0
+	hour, minute, second := now.Hour(), now.Minute(), now.Second()+2
 	err = AlarmDay(fmt.Sprintf("%02d:%02d:%02d", hour, minute, second), count, func(count int) bool {
 		num++
 		h, m, s := time.Now().Local().Clock()
