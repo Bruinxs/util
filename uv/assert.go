@@ -25,6 +25,8 @@ func I2Int64(i interface{}) (int64, error) {
 	switch val.Kind() {
 	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
 		return val.Int(), nil
+	case reflect.Float32, reflect.Float64:
+		return int64(val.Float()), nil
 	case reflect.String:
 		iv, err := strconv.ParseInt(val.String(), 10, 64)
 		if err != nil {
@@ -41,6 +43,8 @@ func I2Float64(i interface{}) (float64, error) {
 	switch val.Kind() {
 	case reflect.Float32, reflect.Float64:
 		return val.Float(), nil
+	case reflect.Int, reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64:
+		return float64(val.Int()), nil
 	case reflect.String:
 		fv, err := strconv.ParseFloat(val.String(), 64)
 		if err != nil {

@@ -175,6 +175,17 @@ func TestI2Int64(t *testing.T) {
 		return
 	}
 
+	i = 3.145
+	iv, err = I2Int64(i)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if iv != int64(3) {
+		t.Errorf("iv(%v) != %v", iv, i)
+		return
+	}
+
 	i = "1001"
 	iv, err = I2Int64(i)
 	if err != nil {
@@ -223,6 +234,17 @@ func TestI2Float64(t *testing.T) {
 		return
 	}
 	if fv != float64(float32(32.1235)) {
+		t.Errorf("iv(%v) != %v", fv, i)
+		return
+	}
+
+	i = 64
+	fv, err = I2Float64(i)
+	if err != nil {
+		t.Error(err)
+		return
+	}
+	if fv != 64.0 {
 		t.Errorf("iv(%v) != %v", fv, i)
 		return
 	}
