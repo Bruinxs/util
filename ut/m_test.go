@@ -1,7 +1,7 @@
 package ut
 
 import (
-	"github.com/Bruinxs/tu/ts"
+	"github.com/Bruinxs/tu"
 	"testing"
 )
 
@@ -111,13 +111,13 @@ func TestM(t *testing.T) {
 	}
 
 	m["sl1"] = []string{"s1", "s2", "s3"}
-	if g, w := m.StrSliceV("sl1"), []string{"s1", "s2", "s3"}; !ts.CmpStr_Strict(g, w) {
+	if g, w := m.StrSliceV("sl1"), []string{"s1", "s2", "s3"}; !tu.CmpStr_Strict(g, w) {
 		t.Errorf("got(%v) != %v", g, w)
 		return
 	}
 
 	m["sl1"] = "s4,s5,s6"
-	if g, w := m.StrSliceV("sl1"), []string{"s4", "s5", "s6"}; !ts.CmpStr_Strict(g, w) {
+	if g, w := m.StrSliceV("sl1"), []string{"s4", "s5", "s6"}; !tu.CmpStr_Strict(g, w) {
 		t.Errorf("got(%v) != %v", g, w)
 		return
 	}
