@@ -1,7 +1,7 @@
 package uv
 
 import (
-	"github.com/Bruinxs/tu"
+	"github.com/Bruinxs/ts"
 	"strings"
 	"testing"
 )
@@ -337,7 +337,7 @@ func TestI2StrSlice(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	if !tu.CmpStr_Strict(ssv, []string{"string", "10", "3.14", "true"}) {
+	if !ts.CmpStr_Strict(ssv, []string{"string", "10", "3.14", "true"}) {
 		t.Errorf("ssv(%v) != %v", ssv, i)
 		return
 	}
@@ -348,7 +348,7 @@ func TestI2StrSlice(t *testing.T) {
 		t.Error(err)
 		return
 	}
-	if !tu.CmpStr_Strict(ssv, []string{"s1", "s2", "s3", "s4"}) {
+	if !ts.CmpStr_Strict(ssv, []string{"s1", "s2", "s3", "s4"}) {
 		t.Errorf("ssv(%v) != %v", ssv, i)
 		return
 	}

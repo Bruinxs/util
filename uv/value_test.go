@@ -2,7 +2,7 @@ package uv
 
 import (
 	"fmt"
-	"github.com/Bruinxs/tu"
+	"github.com/Bruinxs/ts"
 	"reflect"
 	"strings"
 	"testing"
@@ -149,7 +149,7 @@ func TestFetch(t *testing.T) {
 		t.Errorf("s3(%v) != %v", got, want)
 		return
 	}
-	if got, want := s4, []string{"str1", "str2", "str3", "str4"}; !tu.CmpStr_Strict(got, want) {
+	if got, want := s4, []string{"str1", "str2", "str3", "str4"}; !ts.CmpStr_Strict(got, want) {
 		t.Errorf("s4(%v) != %v", got, want)
 		return
 	}
