@@ -1,16 +1,18 @@
-package uv
+package uv_test
 
 import (
-	"github.com/Bruinxs/ts"
 	"strings"
 	"testing"
+
+	"github.com/bruinxs/ts"
+	"github.com/bruinxs/util/uv"
 )
 
 func TestI2Str(t *testing.T) {
 	var i interface{}
 
 	i = "string"
-	str, err := I2Str(i)
+	str, err := uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -21,7 +23,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = 10
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -32,7 +34,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = int8(8)
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -43,7 +45,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = int16(16)
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -54,7 +56,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = int32(32)
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -65,7 +67,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = int64(64)
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -76,7 +78,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = 4.56
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -87,7 +89,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = float32(3.14)
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -98,7 +100,7 @@ func TestI2Str(t *testing.T) {
 	}
 
 	i = true
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -110,7 +112,7 @@ func TestI2Str(t *testing.T) {
 
 	//err
 	i = map[string]interface{}{"key": "val"}
-	str, err = I2Str(i)
+	str, err = uv.I2Str(i)
 	if err == nil || !strings.Contains(err.Error(), "assert to string fail") {
 		t.Error(err)
 		return
@@ -121,7 +123,7 @@ func TestI2Int64(t *testing.T) {
 	var i interface{}
 
 	i = 10
-	iv, err := I2Int64(i)
+	iv, err := uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -132,7 +134,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = int8(8)
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -143,7 +145,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = int16(16)
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -154,7 +156,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = int32(32)
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -165,7 +167,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = int64(64)
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -176,7 +178,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = 3.145
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -187,7 +189,7 @@ func TestI2Int64(t *testing.T) {
 	}
 
 	i = "1001"
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -199,14 +201,14 @@ func TestI2Int64(t *testing.T) {
 
 	//err
 	i = "fake"
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err == nil {
 		t.Error(err)
 		return
 	}
 
 	i = true
-	iv, err = I2Int64(i)
+	iv, err = uv.I2Int64(i)
 	if err == nil || !strings.Contains(err.Error(), "assert to int fail") {
 		t.Error(err)
 		return
@@ -217,7 +219,7 @@ func TestI2Float64(t *testing.T) {
 	var i interface{}
 
 	i = 3.145
-	fv, err := I2Float64(i)
+	fv, err := uv.I2Float64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -228,7 +230,7 @@ func TestI2Float64(t *testing.T) {
 	}
 
 	i = float32(32.1235)
-	fv, err = I2Float64(i)
+	fv, err = uv.I2Float64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -239,7 +241,7 @@ func TestI2Float64(t *testing.T) {
 	}
 
 	i = 64
-	fv, err = I2Float64(i)
+	fv, err = uv.I2Float64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -250,7 +252,7 @@ func TestI2Float64(t *testing.T) {
 	}
 
 	i = "10.0"
-	fv, err = I2Float64(i)
+	fv, err = uv.I2Float64(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -262,14 +264,14 @@ func TestI2Float64(t *testing.T) {
 
 	//err
 	i = "fake"
-	fv, err = I2Float64(i)
+	fv, err = uv.I2Float64(i)
 	if err == nil {
 		t.Error(err)
 		return
 	}
 
 	i = true
-	fv, err = I2Float64(i)
+	fv, err = uv.I2Float64(i)
 	if err == nil || !strings.Contains(err.Error(), "assert to float fail") {
 		t.Error(err)
 		return
@@ -280,7 +282,7 @@ func TestI2Bool(t *testing.T) {
 	var i interface{}
 
 	i = true
-	bv, err := I2Bool(i)
+	bv, err := uv.I2Bool(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -291,7 +293,7 @@ func TestI2Bool(t *testing.T) {
 	}
 
 	i = 0
-	bv, err = I2Bool(i)
+	bv, err = uv.I2Bool(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -302,7 +304,7 @@ func TestI2Bool(t *testing.T) {
 	}
 
 	i = "true"
-	bv, err = I2Bool(i)
+	bv, err = uv.I2Bool(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -314,14 +316,14 @@ func TestI2Bool(t *testing.T) {
 
 	//err
 	i = "fake"
-	bv, err = I2Bool(i)
+	bv, err = uv.I2Bool(i)
 	if err == nil {
 		t.Error(err)
 		return
 	}
 
 	i = 10.34
-	bv, err = I2Bool(i)
+	bv, err = uv.I2Bool(i)
 	if err == nil || !strings.Contains(err.Error(), "assert to bool fail") {
 		t.Error(err)
 		return
@@ -332,7 +334,7 @@ func TestI2StrSlice(t *testing.T) {
 	var i interface{}
 
 	i = []interface{}{"string", 10, 3.14, true}
-	ssv, err := I2StrSlice(i)
+	ssv, err := uv.I2StrSlice(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -343,7 +345,7 @@ func TestI2StrSlice(t *testing.T) {
 	}
 
 	i = "s1,s2,s3,s4"
-	ssv, err = I2StrSlice(i)
+	ssv, err = uv.I2StrSlice(i)
 	if err != nil {
 		t.Error(err)
 		return
@@ -355,14 +357,14 @@ func TestI2StrSlice(t *testing.T) {
 
 	//err
 	i = []interface{}{"string", 10, 3.14, true, map[string]string{}}
-	_, err = I2StrSlice(i)
+	_, err = uv.I2StrSlice(i)
 	if err == nil {
 		t.Error(err)
 		return
 	}
 
 	i = map[string]string{}
-	_, err = I2StrSlice(i)
+	_, err = uv.I2StrSlice(i)
 	if err == nil || !strings.Contains(err.Error(), "assert to string slice fail") {
 		t.Error(err)
 		return

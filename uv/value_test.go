@@ -2,10 +2,11 @@ package uv
 
 import (
 	"fmt"
-	"github.com/Bruinxs/ts"
 	"reflect"
 	"strings"
 	"testing"
+
+	"github.com/bruinxs/ts"
 )
 
 type MV map[string]interface{}

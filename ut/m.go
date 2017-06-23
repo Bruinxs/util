@@ -1,6 +1,6 @@
 package ut
 
-import "github.com/Bruinxs/util/uv"
+import "github.com/bruinxs/util/uv"
 
 type M map[string]interface{}
 

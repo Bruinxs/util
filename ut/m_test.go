@@ -1,12 +1,14 @@
-package ut
+package ut_test
 
 import (
-	"github.com/Bruinxs/ts"
 	"testing"
+
+	"github.com/Bruinxs/util/ut"
+	"github.com/bruinxs/ts"
 )
 
 func TestM(t *testing.T) {
-	m := M{}
+	m := ut.M{}
 
 	//exist
 	if g, w := m.Exist("fake"), false; g != w {
@@ -26,7 +28,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["s1"] = M{}
+	m["s1"] = ut.M{}
 	if g, w := m.StrV("s1"), ""; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -44,7 +46,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["i1"] = M{}
+	m["i1"] = ut.M{}
 	if g, w := m.IntV("i1"), 0; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -62,7 +64,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["f1"] = M{}
+	m["f1"] = ut.M{}
 	if g, w := m.FloatV("f1"), 0.0; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -80,7 +82,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["b1"] = M{}
+	m["b1"] = ut.M{}
 	if g, w := m.BoolV("b1"), false; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -104,7 +106,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["sl1"] = M{}
+	m["sl1"] = ut.M{}
 	if g := m.StrSliceV("sl1"); g != nil {
 		t.Errorf("got(%v) != %v", g, nil)
 		return
