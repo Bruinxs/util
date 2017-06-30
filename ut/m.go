@@ -9,7 +9,7 @@ func (m M) Exist(key string) bool {
 	return ok
 }
 
-func (m M) StrV(key string) string {
+func (m M) Str(key string) string {
 	val, ok := m[key]
 	if !ok {
 		return ""
@@ -22,7 +22,7 @@ func (m M) StrV(key string) string {
 	return sv
 }
 
-func (m M) Int64V(key string) int64 {
+func (m M) Int64(key string) int64 {
 	val, ok := m[key]
 	if !ok {
 		return 0
@@ -35,11 +35,11 @@ func (m M) Int64V(key string) int64 {
 	return iv
 }
 
-func (m M) IntV(key string) int {
-	return int(m.Int64V(key))
+func (m M) Int(key string) int {
+	return int(m.Int64(key))
 }
 
-func (m M) FloatV(key string) float64 {
+func (m M) Float(key string) float64 {
 	val, ok := m[key]
 	if !ok {
 		return 0
@@ -52,7 +52,7 @@ func (m M) FloatV(key string) float64 {
 	return fv
 }
 
-func (m M) BoolV(key string) bool {
+func (m M) Bool(key string) bool {
 	val, ok := m[key]
 	if !ok {
 		return false
@@ -65,7 +65,7 @@ func (m M) BoolV(key string) bool {
 	return bv
 }
 
-func (m M) StrSliceV(key string) []string {
+func (m M) StrSlice(key string) []string {
 	val, ok := m[key]
 	if !ok {
 		return nil
