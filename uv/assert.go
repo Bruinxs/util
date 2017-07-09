@@ -7,6 +7,16 @@ import (
 	"strings"
 )
 
+func I2Val(i interface{}) reflect.Value {
+	val := reflect.ValueOf(i)
+	kind := val.Kind()
+	for kind == reflect.Ptr || kind == reflect.Interface {
+		val = val.Elem()
+		kind = val.Kind()
+	}
+	return val
+}
+
 func I2Str(i interface{}) (string, error) {
 	val := reflect.ValueOf(i)
 	switch val.Kind() {
@@ -93,4 +103,45 @@ func I2StrSlice(i interface{}) ([]string, error) {
 	}
 
 	return nil, fmt.Errorf("interface val(%v) type(%v) assert to string slice fail", i, val.Kind())
+}
+
+func I2Map(i interface{}) (map[string]interface{}, error) {
+	val := I2Val(i)
+	switch val.Kind() {
+	case reflect.Map:
+		m := map[string]interface{}{}
+		for _, kv := range val.MapKeys() {
+			key, err := I2Str(kv.Interface())
+			if err != nil {
+				return nil, err
+			}
+			m[key] = val.MapIndex(kv).Interface()
+		}
+		return m, nil
+
+	case reflect.Struct:
+		m := map[string]interface{}{}
+		typ := val.Type()
+		fieldNum := typ.NumField()
+		var key string
+		for i := 0; i < fieldNum; i++ {
+			field := typ.Field(i)
+			fieldVal := val.Field(i)
+			if !fieldVal.CanInterface() {
+				continue
+			}
+
+			tag := field.Tag.Get("json")
+			if tag != "" {
+				key = strings.Split(tag, ",")[0]
+			} else {
+				key = field.Name
+			}
+
+			m[key] = fieldVal.Interface()
+		}
+		return m, nil
+	}
+
+	return nil, fmt.Errorf("interface val(%v) type(%v) assert to map fail", i, val.Kind())
 }

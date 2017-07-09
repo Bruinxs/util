@@ -4,6 +4,8 @@ import (
 	"strings"
 	"testing"
 
+	"reflect"
+
 	"github.com/bruinxs/ts"
 	"github.com/bruinxs/util/uv"
 )
@@ -368,5 +370,50 @@ func TestI2StrSlice(t *testing.T) {
 	if err == nil || !strings.Contains(err.Error(), "assert to string slice fail") {
 		t.Error(err)
 		return
+	}
+}
+
+func TestI2Map(t *testing.T) {
+	// args4 := map[string]interface{}{}
+
+	type Tmp struct {
+		ia int
+		Ib int
+		Ic int `json:"IIc"`
+		Sa string
+		Sb string `json:"SSb,omitempty"`
+	}
+
+	args5 := Tmp{1, 2, 3, "sav", "sbv"}
+	args6 := &Tmp{1, 2, 3, "sav", "sbv"}
+	want56 := map[string]interface{}{"Ib": 2, "IIc": 3, "Sa": "sav", "SSb": "sbv"}
+
+	// args7 := Tmp{}
+	// args8 := &args7
+	// want78 := map[string]interface{}{"Ib": 0, "IIc": 0, "Sa": ""}
+
+	for i, tt := range []struct {
+		args interface{}
+		want map[string]interface{}
+	}{
+		{map[interface{}]interface{}{"s1": "v1", 2: "v2", "3": 3, 1.23: true},
+			map[string]interface{}{"s1": "v1", "2": "v2", "3": 3, "1.23": true}},
+		{&map[string]string{"k1": "v1", "k2": "v2"},
+			map[string]interface{}{"k1": "v1", "k2": "v2"}},
+		{map[string]interface{}{}, map[string]interface{}{}},
+		// {args4, args4},
+		{args5, want56},
+		{args6, want56},
+		// {args7, want78},
+		// {args8, want78},
+	} {
+		m, err := uv.I2Map(tt.args)
+		if err != nil {
+			t.Error(err)
+			return
+		}
+		if !reflect.DeepEqual(m, tt.want) {
+			t.Error(i, " -> ", m, " != ", tt.want)
+		}
 	}
 }
