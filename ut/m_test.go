@@ -5,9 +5,8 @@ import (
 	"reflect"
 	"testing"
 
-	. "github.com/Bruinxs/util/ut"
 	"github.com/bruinxs/ts"
-	"github.com/bruinxs/util/ut"
+	. "github.com/bruinxs/util/ut"
 )
 
 func TestM(t *testing.T) {
@@ -31,7 +30,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["s1"] = ut.M{}
+	m["s1"] = M{}
 	if g, w := m.Str("s1"), ""; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -49,7 +48,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["i1"] = ut.M{}
+	m["i1"] = M{}
 	if g, w := m.Int("i1"), 0; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -67,7 +66,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["f1"] = ut.M{}
+	m["f1"] = M{}
 	if g, w := m.Float("f1"), 0.0; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -85,7 +84,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["b1"] = ut.M{}
+	m["b1"] = M{}
 	if g, w := m.Bool("b1"), false; g != w {
 		t.Errorf("got(%v) != %v", g, w)
 		return
@@ -109,7 +108,7 @@ func TestM(t *testing.T) {
 		return
 	}
 
-	m["sl1"] = ut.M{}
+	m["sl1"] = M{}
 	if g := m.StrSlice("sl1"); g != nil {
 		t.Errorf("got(%v) != %v", g, nil)
 		return
