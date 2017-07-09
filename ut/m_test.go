@@ -288,3 +288,53 @@ func TestM_StrSliceP(t *testing.T) {
 		})
 	}
 }
+
+func TestM_Map(t *testing.T) {
+	type args struct {
+		key string
+	}
+	tests := []struct {
+		name string
+		m    M
+		args args
+		want M
+	}{
+		{"map1", M{"km": map[string]interface{}{"k1": "v1", "k2": 2}}, args{"km"}, M{"k1": "v1", "k2": 2}},
+		{"map2", M{"km": &map[string]interface{}{"k1": "v1", "k2": 2}}, args{"km"}, M{"k1": "v1", "k2": 2}},
+		{"struct1", M{"ks": struct {
+			Key string `json:"key"`
+		}{"kkv"}}, args{"ks"}, M{"key": "kkv"}},
+		{"struct2", M{"ks": &struct {
+			Key string
+		}{"kkv"}}, args{"ks"}, M{"Key": "kkv"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.m.Map(tt.args.key); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("M.Map() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func TestM_MapP(t *testing.T) {
+	type args struct {
+		patch string
+	}
+	tests := []struct {
+		name string
+		m    M
+		args args
+		want M
+	}{
+		{"1", M{"k1": map[interface{}]interface{}{"k2": M{"1": 1, "2": "2"}}}, args{"k1/k2"}, M{"1": 1, "2": "2"}},
+		{"2", M{"k1": map[interface{}]interface{}{"k2": &M{"1": 1, "2": "2"}}}, args{"k1/k2"}, M{"1": 1, "2": "2"}},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := tt.m.MapP(tt.args.patch); !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("M.MapP() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

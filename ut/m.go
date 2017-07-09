@@ -154,6 +154,30 @@ func (m M) StrSliceP(patch string) []string {
 	return ssv
 }
 
+func (m M) Map(key string) M {
+	val, ok := m[key]
+	if !ok {
+		return nil
+	}
+	mv, err := uv.I2Map(val)
+	if err != nil {
+		return nil
+	}
+	return M(mv)
+}
+
+func (m M) MapP(patch string) M {
+	val := m.ValP(patch)
+	if val == nil {
+		return nil
+	}
+	mv, err := uv.I2Map(val)
+	if err != nil {
+		return nil
+	}
+	return M(mv)
+}
+
 func (m M) ValP(path string) interface{} {
 	path = strings.Trim(path, "/")
 	if path == "" {
